@@ -2,10 +2,10 @@
     <div>
         <el-row :gutter="20">
             <el-col :span="12" :offset="6">
-                <el-input type="text" v-model="userInfo.username" placeholder="用户名"></el-input>
+                <el-input type="text" v-model="loginUser.username" placeholder="用户名"></el-input>
             </el-col>
             <el-col :span="12" :offset="6">
-                <el-input type="password" v-model="userInfo.password" placeholder="密码"></el-input>
+                <el-input type="password" v-model="loginUser.password" placeholder="密码"></el-input>
             </el-col>
             <el-col :span="12" :offset="6">
                 <el-button @click="handleLogin" type="primary" plain>Login</el-button>
@@ -15,11 +15,12 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+    import {mapActions, mapMutations} from 'vuex';
+
     export default {
         data() {
             return {
-                userInfo: {
+                loginUser: {
                     username: '',
                     password: ''
                 }
@@ -27,9 +28,16 @@
         },
         methods: {
             ...mapActions(['login']),
+            ...mapMutations(['setUserInfo']),
             handleLogin() {
-                this.login(this.userInfo);
-                this.$router.push({path: '/'});
+                this.login(this.loginUser).then(res => {
+                    if (res.data.code == 200) {
+                        this.setUserInfo(res.data.data);
+                        this.$router.push({path: '/'});
+                    } else {
+                        this.$message.error(res.data.msg);
+                    }
+                });
             }
         }
     }

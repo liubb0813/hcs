@@ -1,29 +1,27 @@
+import http from './http';
+
 export default {
     state: {
         userInfo: {},
-        menuItems: []
+        menus: []
     },
     getters: {},
     actions: {
-        login(store, {username, password}) {
-            /*http请求后台获取user*/
-            let userInfo = {username: username, gender: 'man'};
-
-            store.commit('setUserInfo', userInfo);
+        login({commit}, {username, password}) {
+            return http.post("/auth/login", {username: username, password: password});
         },
-        getMenuItems(store) {
-            /*http请求后台获取menuItems*/
-            let meunItems = [];
-            meunItems.push({menuId: 100, menuName: '用户管理'});
-            store.commit('setMenuItems', meunItems);
+        getMenus({commit}) {
+            http.post("/auth/getMenus").then(res => {
+                commit('setMenus', res.data.data);
+            });
         }
     },
     mutations: {
         setUserInfo(state, userInfo) {
             state.userInfo = userInfo;
         },
-        setMenuItems(state, menuItems) {
-            state.menuItems = menuItems;
+        setMenus(state, menus) {
+            state.menus = menus;
         }
     }
 }

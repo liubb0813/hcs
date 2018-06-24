@@ -3,7 +3,7 @@ const merge = require('webpack-merge');
 
 module.exports = merge(baseWebpackConfig, {
     devServer: {
-        port: 8080,
+        port: 9000,
         host: '0.0.0.0',
         overlay: {
             errors: true

@@ -6,6 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import Vuex from 'vuex';
 import createRouter from './router';
 import createStore from './store';
+import './assets/comm.css'
 
 Vue.use(VueRouter);
 Vue.use(ElementUI);

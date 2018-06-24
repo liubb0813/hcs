@@ -1,10 +1,36 @@
 <template>
-    <div>
-        {{userInfo.username}}
-        <ul>
-            <li v-for="(item,index) in menuItems">{{item.menuName}}</li>
-        </ul>
-    </div>
+    <el-container style="height: 100%;">
+        <el-header style="background-color:#545c64;"></el-header>
+        <el-container>
+            <el-aside>
+                <el-menu :router=true style="height: 100%;" class="el-menu-vertical-demo" background-color="#545c64"
+                         text-color="#fff" active-text-color="#ffd04b">
+                    <template v-for="menu in menus">
+                        <el-submenu :index="menu.path" v-if="menu.subMenus && menu.subMenus.length > 0">
+                            <template slot="title">
+                                <i :class="menu.icon"></i>
+                                <span>{{menu.name}}</span>
+                            </template>
+                            <el-menu-item-group>
+                                <el-menu-item :index="subMenu.path" v-for="subMenu in menu.subMenus" :key="subMenu.id">
+                                    {{subMenu.name}}
+                                </el-menu-item>
+                            </el-menu-item-group>
+                        </el-submenu>
+                        <el-menu-item :index="menu.path" v-else>
+                            <i :class="menu.icon"></i>
+                            <span slot="title">{{menu.name}}</span>
+                        </el-menu-item>
+                    </template>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-main>
+                    <router-view></router-view>
+                </el-main>
+            </el-container>
+        </el-container>
+    </el-container>
 </template>
 
 <script>
@@ -12,15 +38,14 @@
 
     export default {
         mounted() {
-            this.getMenuItems();
+            this.getMenus();
         },
         methods: {
-            ...mapActions(['getMenuItems'])
+            ...mapActions(['getMenus'])
         },
         computed: {
             ...mapState({
-                userInfo: state => state.auth.userInfo,
-                menuItems: state => state.auth.menuItems
+                menus: state => state.auth.menus
             })
         }
     }
