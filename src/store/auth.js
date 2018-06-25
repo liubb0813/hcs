@@ -2,7 +2,7 @@ import http from './http';
 
 export default {
     state: {
-        userInfo: {},
+        loginUser: JSON.parse(sessionStorage.getItem('loginUser')),
         menus: []
     },
     getters: {},
@@ -12,15 +12,16 @@ export default {
         },
         getMenus({commit}) {
             http.post("/auth/getMenus").then(res => {
-                commit('setMenus', res.data.data);
+                commit('SET_MENUS', res.data.data);
             });
         }
     },
     mutations: {
-        setUserInfo(state, userInfo) {
-            state.userInfo = userInfo;
+        SET_LOGIN_USER(state, loginUser) {
+            state.loginUser = loginUser;
+            sessionStorage.setItem('loginUser', JSON.stringify(loginUser));
         },
-        setMenus(state, menus) {
+        SET_MENUS(state, menus) {
             state.menus = menus;
         }
     }

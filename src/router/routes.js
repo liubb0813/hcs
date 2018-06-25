@@ -7,14 +7,14 @@ export default [
         path: '/',
         component: () => import('../views/home.vue'),
         children: [{
-            path: '/info-user',
-            component: () => import('../views/info/user.vue')
+            path: '/sys-user',
+            component: () => import('../views/sys/user.vue')
         }, {
-            path: '/info-role',
-            component: () => import('../views/info/role.vue')
+            path: '/sys-role',
+            component: () => import('../views/sys/role.vue')
         }, {
-            path: '/show',
-            component: () => import('../views/show.vue')
+            path: '/sys-menu',
+            component: () => import('../views/sys/menu.vue')
         }]
     }
 ]

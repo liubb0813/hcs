@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import { Loading, Message } from 'element-ui';
 
 axios.defaults.baseURL = 'http://localhost:8080/hcs';
 axios.defaults.withCredentials = true;//带cookie请求
@@ -14,5 +15,29 @@ axios.defaults.transformRequest = [function (data) {
     }
     return newData
 }]
+
+// let loadinginstace;
+//
+// axios.interceptors.request.use(config => {
+//     loadinginstace = Loading.service({ fullscreen: true });
+//     return config
+// }, error => {
+//     loadinginstace.close()
+//     Message.error({
+//         message: '加载超时'
+//     })
+//     return Promise.reject(error)
+// })
+//
+// axios.interceptors.response.use(data => {// 响应成功关闭loading
+//     loadinginstace.close();
+//     return data
+// }, error => {
+//     loadinginstace.close();
+//     Message.error({
+//         message: '加载失败'
+//     })
+//     return Promise.reject(error)
+// })
 
 export default axios;

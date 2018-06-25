@@ -16,12 +16,11 @@ const router = createRouter();
 const store = createStore();
 
 router.beforeEach((to, from, next) => {
-    // if (to.fullPath != '/login') {
-    //     next('/login');
-    // } else {
-    //     next();
-    // }
-    next();
+    if (to.fullPath != '/login' && !sessionStorage.getItem('loginUser')) {
+        next('/login');
+    } else {
+        next();
+    }
 });
 
 new Vue({

@@ -1,6 +1,8 @@
 <template>
     <el-container style="height: 100%;">
-        <el-header style="background-color:#545c64;"></el-header>
+        <el-header style="background-color:#545c64;">
+
+        </el-header>
         <el-container>
             <el-aside>
                 <el-menu :router=true style="height: 100%;" class="el-menu-vertical-demo" background-color="#545c64"

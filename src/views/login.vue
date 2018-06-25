@@ -28,11 +28,11 @@
         },
         methods: {
             ...mapActions(['login']),
-            ...mapMutations(['setUserInfo']),
+            ...mapMutations(['SET_LOGIN_USER']),
             handleLogin() {
                 this.login(this.loginUser).then(res => {
                     if (res.data.code == 200) {
-                        this.setUserInfo(res.data.data);
+                        this.SET_LOGIN_USER(res.data.data);
                         this.$router.push({path: '/'});
                     } else {
                         this.$message.error(res.data.msg);
