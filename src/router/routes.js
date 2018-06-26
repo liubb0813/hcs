@@ -8,7 +8,7 @@ export default [
         component: () => import('../views/home.vue'),
         children: [{
             path: '/sys-user',
-            component: () => import('../views/sys/user.vue')
+            component: () => import('../views/sys/user/user.vue')
         }, {
             path: '/sys-role',
             component: () => import('../views/sys/role.vue')

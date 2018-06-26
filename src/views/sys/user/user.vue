@@ -5,7 +5,7 @@
                 <el-input v-model="queryUsername" placeholder="请输入用户名"></el-input>
             </el-col>
             <el-button plain>查询</el-button>
-            <el-button type="primary" plain>新增</el-button>
+            <el-button @click="editUser()" type="primary" plain>新增</el-button>
             <el-button type="danger" plain>批量删除</el-button>
         </el-row>
 
@@ -29,34 +29,51 @@
                            :page-size="5" :total="total">
             </el-pagination>
         </el-row>
+
+        <user-edit ref="userEdit" @refreshTable="refreshTable()"></user-edit>
     </div>
 </template>
 
 <script>
-    import {mapActions, mapState} from 'vuex'
+    import {mapActions} from 'vuex';
+    import userEdit from './user-edit.vue';
 
     export default {
+        components: {
+            userEdit
+        },
         data() {
             return {
-                queryUsername: ''
+                userList:[],
+                total:1,
+                queryUsername: '',
+                curPage: 1
             }
         },
         computed: {
-            ...mapState({
-                userList: state => state.sysUser.userList,
-                total: state => state.sysUser.total
-            })
+
         },
         mounted() {
-            this.getUserList({offset: 0, limit: 5});
+            this.refreshTable();
         },
         methods: {
             ...mapActions(['getUserList']),
             handleEdit(index, row) {
-                console.log(index, row);
+                this.editUser(row.id);
             },
             handleCurrentChange(val) {
-                this.getUserList({offset: (val - 1) * 5, limit: 5});
+                this.curPage = val;
+                this.refreshTable();
+            },
+            editUser(id) {
+                this.$refs.userEdit.editUser(id);
+            },
+            refreshTable() {
+                this.getUserList({offset: (this.curPage - 1) * 5, limit: 5}).then(res => {
+                    let data = res.data.data;
+                    this.userList = data.userList;
+                    this.total = data.total;
+                });
             }
         }
     }
